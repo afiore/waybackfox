@@ -1,0 +1,38 @@
+/* This is just an example.  You shouldn't do this. */
+@namespace xul url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#wb-popup{
+  min-width: 300px;
+  font-size: medium;
+  font-family: sans-serif;
+}
+
+#wb-popup vbox{
+  margin: 5px;
+  background: #CFCFCF !important;
+  opacity: 0.8;
+}
+
+#wb-popup label {
+  display: block;
+  text-align: center;
+}
+
+hbox#wb-close{
+  position: absolute;
+  right: 1px; 
+}
+
+image#wb-popup-close{
+  margin: 3px;
+}
+
+#wb-available-snaps{
+  margin-top: 2px !important;
+}
+
+#wb-snap-date{
+  font-size: large;
+  color: #BF0000;
+}
+

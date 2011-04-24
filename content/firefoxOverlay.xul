@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://waybackfox/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://waybackfox/locale/waybackfox.dtd">
+<overlay id="waybackfox-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+         xmlns:xhtml="http://www.w3.org/TR/xhtml1/strict">
+
+  <!-- third party utilities -->
+  <script src="vendor/underscore.js" />
+  <script src="vendor/jquery.js" />
+  <script type="application/javascript;version=1.8" src="vendor/light-traits.js" />
+
+  <!-- Main application module -->
+  <script src="lib/waybackfox.js"/>
+
+  <!-- Waybackfox Traits -->
+  <script src="lib/traits/evented-object.js"/>
+
+  <!-- Waybackfox components -->
+  <script src="lib/components/icon.js" />
+
+  <!-- Main script-->
+  <script src="main.js" />
+
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="waybackfox-strings" src="chrome://waybackfox/locale/waybackfox.properties"/>
+  </stringbundleset>
+
+<statusbar id="status-bar">
+  <statusbarpanel id="wb-panel">
+    <menupopup id="wb-pref-cache" tooltip="Set Waybackfox cache size">
+      <menuitem label="30" value="30" type="radio" checked="true" name="max_storage" />
+      <menuitem label="60" value="60" type="radio" name="max_storage"/>
+      <menuitem label="90" value="90" type="radio" name="max_storage"/>
+    </menupopup>
+
+    <image width="15px" height="15px" id="wb-icon" src="chrome://waybackfox/content/imgs/favicon.ico" />
+    <!-- move scale into popup -->
+    <scale id="wb-slider" min="1" popup="wb-popup" hidden="true"/>
+    <label id="wb-label" hidden="true"/>
+    <panel id="wb-popup" position="after_start"
+                        noautohide="true"
+                        onpopupshown="waybackfox.statuspanel.update_popup();">
+       <vbox>
+          <box id="wb-close" align="right">
+                       <image align="end" src="chrome://waybackfox/content/imgs/close-small.png"
+                                                  id="wb-popup-close" height="10px" width="10px"
+                                                  onclick="waybackfox.statuspanel.popup.hidePopup();"/>
+          </box>
+          <label id="wb-available-snaps"/>
+          <label id="wb-snap-date"/>
+       </vbox>
+   </panel>
+  </statusbarpanel>
+ </statusbar>
+</overlay>

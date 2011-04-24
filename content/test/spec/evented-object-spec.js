@@ -5,7 +5,8 @@ var EventedTrait = Trait(
           element: Trait.required,
           events: {
             'click a': 'handleClick',
-            'click': 'handleOtherClick'
+            'click': 'handleOtherClick',
+            'data-available': 'handleCustomEvent'
           },
           handleClick: function (event) {
             console.info('handling click');
@@ -16,7 +17,6 @@ var EventedTrait = Trait(
           handleCustomEvent: function (event) {}
         })
     ),
-
     // pseudo constructor
     //
     // (as traits are meant to be mixed together,
@@ -38,13 +38,15 @@ var EventedTrait = Trait(
 beforeEach(function () {
   var element = document.createElement('div');
   element.innerHTML='<a href="#" />';
-
   element.classList.add('evented-object');
+
   document.body.appendChild(element);
   instance = EventedObject(element);
-  //spies
+
   sinon.spy(instance,'handleClick');
   sinon.spy(instance,'handleOtherClick');
+  sinon.spy(instance, 'handleCustomEvent');
+
 });
 
 afterEach(function () {
@@ -55,7 +57,6 @@ afterEach(function () {
 
 
 describe('WaybackFox.Traits.eventedObject', function () {
-  describe("#events", function () {
     it("Should bind child elements", function () {
       instance.emitFromChild('a','click');
       expect(instance.handleClick).toHaveBeenCalled();
@@ -75,7 +76,12 @@ describe('WaybackFox.Traits.eventedObject', function () {
       instance.emitFromChild('a','click');
       expect(instance.handleClick).not.toHaveBeenCalled();
     });
-  });
 
+    it("Should also bind custom events and pass a message to the handler function", function () {
+      var message = {foo:'bar'};
+      instance.emit('data-available', message);
+      expect(instance.handleCustomEvent).toHaveBeenCalled();
+      expect(instance.handleCustomEvent.args[0][0].message.foo).toBe('bar');
+    });
 });
 

@@ -125,13 +125,7 @@ var EventedObject = Trait({
         this[method].apply(this, arguments);
       }, this);
 
-    if (this._isCustomEvent(event)) {
-      this.subscribe(event, closure);
-
-    } else {
-      console.info('adding the "'+method+'" listener to '+target.tagName);
-      target.addEventListener(event, closure, true);
-    }
+    target.addEventListener(event, closure, true);
 
     // preserve a reference to the closure in the 'activeHandlers' map
     activeHandlers[method] = closure;
@@ -237,7 +231,7 @@ var EventedObject = Trait({
     * (Wrapper around addEventListener)
     *
     * event      - The event name
-    * useCapture - ...
+    * useCapture - Wether the event will bubble up or not
     * isTrusted  - A boolean specifying whether the event emitted can be untrusted (optional)
     *
     * Returns nothing.
@@ -247,6 +241,8 @@ var EventedObject = Trait({
       isTrusted = isTrusted || false;
       this.element.addEventListener(event, callback, useCapture, isTrusted);
     },
+
+
 
     /**
      * Unregister an event listener

@@ -10,22 +10,23 @@
   <script type="text/javascript" src="../vendor/jasmine-sinon.js"></script>
 
   <!-- vendor -->
-  <script type="application/javascript;version=1.8" src="../../vendor/light-traits.js"></script>
-  <script type="text/javascript" src="../../vendor/jquery.js"></script>
+  <script type="application/javascript" src="../../vendor/light-traits.js"></script>
+  <script type="application/javascript" src="../../vendor/membrane-traits.js"></script>
+  <!--script type="text/javascript" src="../../vendor/jquery.js"></script-->
   <script type="text/javascript" src="../../vendor/underscore.js"></script>
 
   <!-- Waybackfox -->
   <script type="text/javascript" src="../../lib/waybackfox.js"></script>
   <script type="text/javascript" src="../../lib/traits/evented-object.js"></script>
+  <script type="text/javascript" src="../../lib/traits/state-machine.js"></script>
 
   <!-- include spec files here... -->
-  <script type="text/javascript" src="evented-object-spec.js"></script>
-
+  <!--script type="text/javascript" src="evented-object-spec.js"></script-->
+  <script type="text/javascript" src="state-machine-spec.js"></script>
 </head>
 <body>
 
 <script type="text/javascript">
-
   jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
   jasmine.getEnv().execute();
 </script>

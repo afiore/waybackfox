@@ -9,10 +9,10 @@ var EventedTrait = Trait(
             'data-available': 'handleCustomEvent'
           },
           handleClick: function (event) {
-            console.info('handling click');
+    //        console.info('handling click');
           },
           handleOtherClick: function(event) {
-            console.info('handling other click');
+    //        console.info('handling other click');
           },
           handleCustomEvent: function (event) {}
         })

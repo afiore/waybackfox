@@ -32,7 +32,7 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-
+(function () {
 "use strict";
 
 // `var` is being used in the module in order to make it reusable in
@@ -573,4 +573,5 @@ Trait.required = Object.freeze(Object.create(Object.prototype, {
 }));
 Object.freeze(Trait.required.toString.prototype);
 
-window.Trait = Object.freeze(Trait);
+this.Trait = Object.freeze(Trait);
+}).call(window);

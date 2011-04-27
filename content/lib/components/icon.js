@@ -7,65 +7,26 @@
 (function (window, undefined) {
    'use strict';
 
-  /* private variable holding the icon's state */
-    var iconState = 'IDLE';
+   var IconTrait = Trait(
+     WaybackFox.Traits.Optionable,
+     WaybackFox.Traits.EventedObject,
+     WaybackFox.Traits.StateMachine,
+     Trait({
+      /*
+       * Callback function set to run when entering all defined states.
+       * Updates the icon image to reflect the current state
+       *
+       *
+       * returns nothing.
+       *
+       */
+       onStateChange: function () {
+         var baseUrl = "chrome://waybackfox/content/images/";
+         this.element.setAttribute("src", baseUrl + this.currentState() + ".ico");
+       }
+     })
+   );
 
-   /**
-    * A trait defining the Waybackfox icon widget behaviour.
-    *
-    */
-    var iconTrait = Trait(
-      WaybackFox.Traits.EventedObject,
-      //WaybackFox.Traits.TabObserver,
-      Trait({
-        element: Trait.required,
-        options: Trait.required,
-        events: {
-          'click' : 'clickHandler'
-        },
-        clickHandler: function (event) {
-        },
-
-       /*
-        * Returns the icon's state
-        *
-        */
-        getState: function () {
-          return iconState;
-        },
-
-        // utility methods for changing the widget state
-        // (they are all wrappers for this._setState)
-
-        setIdle: function (silent) {
-          this._setState('idle');
-        },
-        setActive: function (silent) {
-          this._setState('active', silent);
-        },
-        setData: function (silent) {
-          this._setState('data', silent);
-        },
-        setNoData: function (silent) {
-          this._setState('no-data', silent);
-        },
-
-        /*
-         * Internal method for setting the internal state of the widget.
-         *
-         * silent - does not emit an event if set to true
-         *
-         * returns nothing.
-         */
-        _setState: function (state, silent) {
-          iconState = state;
-          if (!silent) {
-            //emit both generic and a specific state change events
-            this.emit('state-changed', state);
-            this.emit('state-' + state);
-          }
-        }
-      }));
 
   /**
    * Pseudo constructor for instantiating the Icon widget.
@@ -75,11 +36,26 @@
    */
   function Icon (element, options) {
     options = options || {};
-
-    return iconTrait.create({
-      element: $(element),
+    var instance = IconTrait.create({
+      events: {},
+      element: element,
       options: options
     });
+    instance.stateMachine(function () {
+      var onStateChange = instance.onStateChange;
+
+      this.addState('idle', onStateChange);
+      this.addState('active', onStateChange);
+      this.addState('data', onStateChange );
+      this.addState('no-data', onStateChange );
+
+      this.addTransition('activate', {from:'idle', to:'active'});
+      this.addTransition('deactivate', {from:['active','data','no-data'], to:'idle'});
+      this.addTransition('showData', {from:'active', to:'data'});
+      this.addTransition('showNoData', {from:'active', to:'no-data'});
+    });
+
+    return instance;
   }
 
   //export component

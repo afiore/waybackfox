@@ -82,15 +82,22 @@
   *
   */
   _addState: function (state, onEnter, onExit) {
-    //set current state if undefined
+
+    //first run... set first defined state as default
     if (_.isNull(this._currentState)) {
       this._currentState = state;
+
+      //run onEnter callback
+      if (onEnter) {
+        onEnter.call(this);
+      }
     }
     this._definedStates.push({
       name: state,
       onEnter: onEnter,
       onExit : onExit
     });
+
   },
 
   /**

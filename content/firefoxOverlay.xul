@@ -35,7 +35,7 @@
       <menuitem label="90" value="90" type="radio" name="max_storage"/>
     </menupopup>
 
-    <image width="15px" height="15px" id="wb-icon" src="chrome://waybackfox/content/imgs/favicon.ico" />
+    <image width="15px" height="15px" id="wb-icon" src="chrome://waybackfox/content/images/favicon.ico" />
     <!-- move scale into popup -->
     <scale id="wb-slider" min="1" popup="wb-popup" hidden="true"/>
     <label id="wb-label" hidden="true"/>

@@ -81,15 +81,15 @@ var EventedObject = Trait({
   events: Trait.required,
 
   /*
+   * Public:
+   *
    * Binds all the dom events defined in the #events map keys to the methods assigned as map values.
    *
-   * Note:
-   * As this function also acts as an initialisation method, the _setAliases method is called here.
    *
    *
    * Returns nothing
    */
-   _addEvents: function () {
+   initEvents: function () {
      var self = this;
      _.each(this.events, function (methodName, eventSelector) {
 
@@ -105,8 +105,6 @@ var EventedObject = Trait({
        //todo: consider throwing an error here if no element can be found
        self._addEvent(element, event, methodName);
      });
-
-     this._aliasMethods();
    },
 
    /*
@@ -166,13 +164,14 @@ var EventedObject = Trait({
   *
   * Returns nothing.
   */
-  publish: function (eventType, message, bubbles, cancellable) {
+  emit: function publish (eventType, message, bubbles, cancellable) {
     var event;
 
     bubbles = bubbles || true;
     cancellable = cancellable || true;
-    event= this._createEvent(eventType, message, bubbles, cancellable);
+    event = this._createEvent(eventType, message, bubbles, cancellable);
     this.element.dispatchEvent(event);
+
   },
 
   /**
@@ -184,7 +183,7 @@ var EventedObject = Trait({
    * cancellable - A boolean specifying whether the event can be cancelled or not (optional)
    *
    */
-    publishFromChild: function (element, eventType, bubbles, cancellable) {
+    emitFromChild: function publishFromChild (element, eventType, bubbles, cancellable) {
       var event = this._createEvent(eventType, null, bubbles, cancellable),
           child = el(element, this.element);
 
@@ -231,15 +230,14 @@ var EventedObject = Trait({
     * (Wrapper around addEventListener)
     *
     * event      - The event name
+    * callback   - A function to be called when the event is fired
     * useCapture - Wether the event will bubble up or not
-    * isTrusted  - A boolean specifying whether the event emitted can be untrusted (optional)
     *
     * Returns nothing.
     */
-    subscribe: function (event, callback, useCapture, isTrusted) {
+    on: function (event, callback, useCapture) {
       useCapture = useCapture || true;
-      isTrusted = isTrusted || false;
-      this.element.addEventListener(event, callback, useCapture, isTrusted);
+      this.element.addEventListener(event, callback, useCapture);
     },
 
 
@@ -253,7 +251,7 @@ var EventedObject = Trait({
      *
      * returns nothing
      */
-     unsubscribe: function (event, method, useCapture, child) {
+     unsubscribe: function unsubscribe (event, method, useCapture, child) {
        var activeHandler = getHandler(method),
            element = child || document;
 
@@ -275,7 +273,7 @@ var EventedObject = Trait({
      *
      * returns nothing
      */
-     unsubscribeChild: function (selector, event, methodName, useCapture) {
+     unsubscribeChild: function unsubscribeChild (selector, event, methodName, useCapture) {
       var child = el(selector, this.element);
       useCapture = useCapture || false;
 
@@ -285,17 +283,6 @@ var EventedObject = Trait({
 
        this.unsubscribe(event, methodName, useCapture, child);
      },
-
-    /*
-     * Aliases publish/subscribe methods to emit/on
-     *
-     * Returns nothing
-     */
-    _aliasMethods: function () {
-      this.emit = this.publish;
-      this.emitFromChild = this.publishFromChild;
-      this.on = this.subscribe;
-    },
 
     /*
      * Check whether this event is user-defined or is instead a DOM/XUL event.
@@ -309,6 +296,11 @@ var EventedObject = Trait({
     }
 
   });
+  //add a few handy aliases
+
+
+
+
   //export the trait
   this.EventedObject = EventedObject;
 

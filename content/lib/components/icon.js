@@ -41,6 +41,7 @@
       element: element,
       options: options
     });
+
     instance.stateMachine(function () {
       var onStateChange = instance.onStateChange;
 

@@ -87,34 +87,30 @@
      */
     (function fetch () {
       var url = firstAttempt ? tabUrl : _toggleWww(tabUrl);
-
-      request({
-        url: [ARCHIVE_BASE_URL, '*', url].join('/'),
-        onComplete: function (response) {
-          var outputData;
-          if (response.status == '200') {
+      var request = XMLHttpRequest();
+      request.open('GET',[ARCHIVE_BASE_URL, '*', url].join('/'), true);
+      request.onreadystatechange = function (event) {
+        if (request.readyState === 4) {
+          if (request.status == '200') {
             //attempt successful, pass data to callback
             outputData = extractSnapshotData(response.text, url);
             callback(outputData);
-
           } else {
             //if the first attempt fails,
             //retry chopping out or adding the '.www' fragment to the url
             if (firstAttempt) {
               firstAttempt = false;
               fetch();
-
             } else {
               throw new Error(
                 'Request failed for '+ archiveLookupUrl +
                  'with status code: ' + response.status
               );
             }
-
           }
         }
-      }).get();
-
+      };
+      request.send(null);
     })();
   }
 

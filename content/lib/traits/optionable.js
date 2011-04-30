@@ -5,7 +5,7 @@
  *
  */
 
-  var OptionableTrait = MembraneTrait({
+  var OptionableTrait = Trait({
     options: {}
   });
 

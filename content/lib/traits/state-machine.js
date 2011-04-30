@@ -1,6 +1,6 @@
 (function (window) {
   'use strict';
-  var StateMachineTrait = MembraneTrait({
+  var StateMachineTrait = Trait({
 
   /*
    * Implements the state transition as an instance method.
@@ -65,7 +65,7 @@
 
       //if the instance implements the evented object trait, also emit an event
       if (this.emit) {
-        this.emit('state:'+to, callbackMessage);
+        this.emit('state:'+enterState, callbackMessage);
       }
 
     }, this);

@@ -1,6 +1,8 @@
 //a dummy trait which is combined to evented object
 'use strict';
 
+describe('WaybackFox.Traits.eventedObject', function () {
+
 // unfortunatelly Traits.js and cortex do not seem to play nicely with sinon.js (or the other way around)
 // so I cannot use spies, and have to do that manually...
 var methodCalls = {
@@ -45,13 +47,18 @@ var methodCalls = {
     },
     instance;
 
-EventedObject.prototype.events = {
-  'click a': 'handleClick',
-  'click': 'handleOtherClick',
-  'data-available': 'handleCustomEvent'
-};
+    EventedObject.prototype.events = {
+      'click a': 'handleClick',
+      'click': 'handleOtherClick',
+      'data-available': 'handleCustomEvent'
+    };
 
-describe('WaybackFox.Traits.eventedObject', function () {
+
+
+
+
+
+
   beforeEach(function () {
     var element = document.createElement('div');
     element.innerHTML='<a href="#" />';

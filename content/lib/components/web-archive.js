@@ -1,6 +1,8 @@
-(function (window, undefined)) {
+(function (window, undefined) {
   'use strict';
-  const ARCHIVE_BASE_URL = 'http://classic-web.archive.org/web';
+  var ARCHIVE_BASE_URL = 'http://classic-web.archive.org/web',
+      dataStore = {};
+
   /*
    * Extracts snapshots
    *
@@ -39,6 +41,9 @@
            "([0-9]{14})" + "/http://(www\.)?" +
           escapeForRegexp(sanitisedUrl),
         snapshotUrlRegexp = new RegExp(regexpString);
+
+
+    console.info("regexp string: "+regexpString);
 
     textLines.forEach( function (line, index) {
       var matches = snapshotUrlRegexp.exec(line);
@@ -86,30 +91,33 @@
      *
      */
     (function fetch () {
-      var url = firstAttempt ? tabUrl : _toggleWww(tabUrl);
-      var request = XMLHttpRequest();
+      var url = firstAttempt ? tabUrl : _toggleWww(tabUrl),
+          request = new XMLHttpRequest(),
+          outputData;
+
       request.open('GET',[ARCHIVE_BASE_URL, '*', url].join('/'), true);
+
       request.onreadystatechange = function (event) {
         if (request.readyState === 4) {
           if (request.status == '200') {
             //attempt successful, pass data to callback
-            outputData = extractSnapshotData(response.text, url);
+            outputData = extractSnapshotData(request.responseText, url);
             callback(outputData);
           } else {
-            //if the first attempt fails,
-            //retry chopping out or adding the '.www' fragment to the url
+
             if (firstAttempt) {
               firstAttempt = false;
               fetch();
             } else {
               throw new Error(
                 'Request failed for '+ archiveLookupUrl +
-                 'with status code: ' + response.status
+                 'with status code: ' + request.status
               );
             }
           }
         }
       };
+
       request.send(null);
     })();
   }
@@ -152,7 +160,9 @@
 
 
   //Module exports
-  this.fetchSnapshots = fetchSnapshots;
-  this.inDataStore = inDataStore;
+  this.webArchive = {
+    fetchSnapshots: fetchSnapshots
+  };
+
 
 }).call(WaybackFox.Components, window);

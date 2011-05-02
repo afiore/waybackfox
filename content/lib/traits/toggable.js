@@ -14,7 +14,12 @@
     * returns nothing
     */
     show: function () {
-      this.element.style.display = '';
+      if (this.element instanceof XULElement) {
+        this.element.hidden = false;
+      } else {
+        this.element.style.display = '';
+      }
+
     },
 
    /*
@@ -23,7 +28,12 @@
     * returns nothing
     */
     hide: function () {
-      this.element.style.display = 'none';
+      if (this.element instanceof XULElement) {
+        this.element.hidden = true;
+      } else {
+        this.element.style.display = 'none';
+      }
+
     },
 
     /*
@@ -33,7 +43,11 @@
     *
     */
     isVisible: function () {
-      return this.element.style.display !== 'none';
+      if (this.element instanceof XULElement) {
+        return !this.element.hidden;
+      } else {
+        return this.element.style.display !== 'none';
+      }
     },
 
    /*
@@ -43,10 +57,15 @@
     */
 
     toggle: function () {
-      if (this.element.display === 'none') {
-        this.element.show();
+      if (this.element instanceof XULElement) {
+        this.element.hidden = !this.element.hidden;
       } else {
-        this.element.hide();
+
+        if (this.element.display === 'none') {
+          this.element.show();
+        } else {
+          this.element.hide();
+        }
       }
     }
   });

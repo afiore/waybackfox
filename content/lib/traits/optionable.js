@@ -6,7 +6,7 @@
  */
 
   var OptionableTrait = Trait({
-    options: {}
+    options: Trait.required
   });
 
   this.Optionable = OptionableTrait;

@@ -14,10 +14,16 @@
   <script src="lib/waybackfox.js"/>
 
   <!-- Waybackfox Traits -->
-  <script src="lib/traits/evented-object.js"/>
+  <script src="lib/traits/evented-object.js" />
+  <script src="lib/traits/optionable.js" />
+  <script src="lib/traits/toggable.js" />
+  <script src="lib/traits/state-machine.js" />
 
   <!-- Waybackfox components -->
+  <script src="lib/components/web-archive.js" />
   <script src="lib/components/icon.js" />
+  <script src="lib/components/slider.js" />
+  <script src="lib/components/progress-listener.js" />
 
   <!-- Main script-->
   <script src="main.js" />
@@ -35,7 +41,7 @@
       <menuitem label="90" value="90" type="radio" name="max_storage"/>
     </menupopup>
 
-    <image width="15px" height="15px" id="wb-icon" src="chrome://waybackfox/content/images/favicon.ico" />
+    <image width="15px" height="15px" id="wb-icon" src="chrome://waybackfox/content/images/widget-idle.ico" />
     <!-- move scale into popup -->
     <scale id="wb-slider" min="1" popup="wb-popup" hidden="true"/>
     <label id="wb-label" hidden="true"/>
@@ -44,7 +50,7 @@
                         onpopupshown="waybackfox.statuspanel.update_popup();">
        <vbox>
           <box id="wb-close" align="right">
-                       <image align="end" src="chrome://waybackfox/content/imgs/close-small.png"
+                       <image align="end" src="chrome://waybackfox/content/images/close-small.png"
                                                   id="wb-popup-close" height="10px" width="10px"
                                                   onclick="waybackfox.statuspanel.popup.hidePopup();"/>
           </box>

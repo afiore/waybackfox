@@ -38,12 +38,21 @@
       setData: function (data) {
         this.data = data;
         this._setValues();
-      }
+      },
 
+      onStateChange: function onStateChange (event) {
+        dump("state-changed! " + event.message.currentState + "\n");
+
+        if (event.message.currentState === 'data') {
+          this.show();
+          this.setData(data);
+        } else {
+          dump("hiding slider\n");
+          this.hide();
+        }
+      }
     })
   );
-
-
  /*
   * Public:
   * Instantiate a slider element.
@@ -57,10 +66,11 @@
   *
   */
 
-  this.Slider = function Slider (element, options) {
+
+  this.Slider = function Slider(element, options) {
     var instance = SliderTrait.create({
       element: element,
-      events : {},
+      events: {},
       options: options,
       data: []
     });
@@ -71,19 +81,9 @@
     // Web Archive data is not available at all
 
     if (options.icon) {
-      options.icon.on('event:data', function (event) {
-        //this message.message sucks!
-        instance.setData(event.message.message);
-      });
-      options.icon.on('state-change', function (event) {
-        var enterState = event.message.to;
-        if (_(['idle', 'loading', 'no-data']).include(enterState)) {
-          instance.hide();
-        }
-        if (_(['active','data']).include(enterState)) {
-          instance.show();
-        }
-      });
+      options.icon.on('state-change', _.bind(function (event) {
+        this.onStateChange(event);
+      }, instance));
     }
     return instance;
   };

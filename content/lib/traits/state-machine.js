@@ -24,7 +24,7 @@
    _implementInstanceMethod: function (method, fromTo, onTransition) {
     var from = fromTo.from,
         enterState  = fromTo.to,
-        oldState    = _.clone(this._currentState),
+        oldState    = this.currentState(),
         callbackMessage;
 
 
@@ -42,7 +42,8 @@
       //(e.g. ...from primary school to Phd)
 
       if (! _.include(fromTo.from, this._currentState )) {
-        throw new Error("Cannot execute transition, current state is '"+ this._currentState + "'");
+        throw new Error("Cannot execute transition '" + method +
+                        "', current state is '"+ this._currentState + "'");
       }
 
       //run the onExit hook
@@ -64,7 +65,7 @@
       }
 
       // Emit events
-      this._doEmit(enterState, oldState, callbackMessage);
+      this._doEmit(enterState, callbackMessage);
 
     }, this);
   },
@@ -78,15 +79,14 @@
    *
    */
 
-  _doEmit: function (enterState, exitState, message) {
+  _doEmit: function (enterState, data) {
     //if the instance implements the evented object trait, use it
     if (this.emit) {
       //emit both a specific and a  generic event
-      this.emit('state:'+enterState, message);
+      this.emit('state:'+enterState, data);
       this.emit('state-change', {
-        from: exitState,
-        to: enterState,
-        message: message
+        currentState: enterState,
+        data: data
       });
     }
   },

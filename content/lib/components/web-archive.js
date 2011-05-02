@@ -100,6 +100,7 @@
       request.onreadystatechange = function (event) {
         if (request.readyState === 4) {
           if (request.status == '200') {
+
             //attempt successful, pass data to callback
             outputData = extractSnapshotData(request.responseText, url);
             callback(outputData);
@@ -110,7 +111,7 @@
               fetch();
             } else {
               throw new Error(
-                'Request failed for '+ archiveLookupUrl +
+                'Request failed for ' +  [ARCHIVE_BASE_URL, '*', url].join('/') +
                  'with status code: ' + request.status
               );
             }

@@ -31,7 +31,7 @@ describe('WaybackFox.Components.WebArchive', function () {
     this.xhr.restore();
   });
 
-  it("#element.src should reflect the icon state", function () {
+  it(".fetchSnapshots() should pass some 1400 extracted records to the callback", function () {
     var onData = sinon.spy();
     webArchive.fetchSnapshots('http://www.un.org', onData);
     this.requests[0].respond(200, {'ContentType': 'text/html'}, webArchiveResponse);

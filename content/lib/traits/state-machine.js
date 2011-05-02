@@ -23,7 +23,8 @@
 
    _implementInstanceMethod: function (method, fromTo, onTransition) {
     var from = fromTo.from,
-        enterState   = fromTo.to,
+        enterState  = fromTo.to,
+        oldState    = _.clone(this._currentState),
         callbackMessage;
 
 
@@ -57,18 +58,37 @@
         onEnter.call(this);
       }
 
-
       //run onTransition callback
       if (onTransition) {
         callbackMessage = onTransition.call(this);
       }
 
-      //if the instance implements the evented object trait, also emit an event
-      if (this.emit) {
-        this.emit('state:'+enterState, callbackMessage);
-      }
+      // Emit events
+      this._doEmit(enterState, oldState, callbackMessage);
 
     }, this);
+  },
+
+  /**
+   * Wrapper for emitting events
+   *
+   * enterState - the entering state
+   * exitState  - the exiting state
+   * message    - the message to be sent with the event
+   *
+   */
+
+  _doEmit: function (enterState, exitState, message) {
+    //if the instance implements the evented object trait, use it
+    if (this.emit) {
+      //emit both a specific and a  generic event
+      this.emit('state:'+enterState, message);
+      this.emit('state-change', {
+        from: exitState,
+        to: enterState,
+        message: message
+      });
+    }
   },
 
 
@@ -91,7 +111,11 @@
       if (onEnter) {
         onEnter.call(this);
       }
+
+      // Emit
+      this._doEmit(this._currentState, null);
     }
+
     this._definedStates.push({
       name: state,
       onEnter: onEnter,

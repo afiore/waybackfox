@@ -47,11 +47,13 @@
 
       this.addState('idle', onStateChange);
       this.addState('active', onStateChange);
+      this.addState('loading', onStateChange);
       this.addState('data', onStateChange );
       this.addState('no-data', onStateChange );
 
       this.addTransition('activate', {from:'idle', to:'active'});
       this.addTransition('deactivate', {from:['active','data','no-data'], to:'idle'});
+      this.addTransition('showLoading', {from: ['active','data','no-data'], to: 'loading'});
       this.addTransition('showData', {from:'active', to:'data'});
       this.addTransition('showNoData', {from:'active', to:'no-data'});
     });

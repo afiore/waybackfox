@@ -1,5 +1,5 @@
 'use strict';
-describe('WaybackFox.components.icon', function () {
+describe('WaybackFox.Components.Icon', function () {
   var iconElement = document.createElement('img'), //this is a XUL image element, but we are mocking it here :)
       Icon = WaybackFox.Components.Icon,
       iconInstance;

@@ -26,7 +26,7 @@ describe('WaybackFox.Components.Slider', function () {
     expect(slider.isVisible()).toBeFalsy();
   });
 
-  it("Should be visible when icon is active, has data, has no-data", function () {
+  it("Should be visible when icon has data", function () {
     // note: a first state-change event should be fired on initialisation..
     // unfortunately it is not possible to bind to it as bindings are defined
     // in the Slider() pseudo constructor, after the object is instantiated.
@@ -34,7 +34,7 @@ describe('WaybackFox.Components.Slider', function () {
     sinon.spy(slider,'hide');
     icon.activate();
     icon.showData();
-    expect(slider.show).toHaveBeenCalledTwice();
+    expect(slider.show).toHaveBeenCalledOnce();
     expect(slider.isVisible()).toBeTruthy();
   });
 

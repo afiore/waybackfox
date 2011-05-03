@@ -58,7 +58,7 @@
         var door = Door();
         door.close();
         expect(function () { door.close();}).toThrow(new Error(
-          "Cannot execute transition, current state is 'closed'"
+          "Cannot execute transition 'close', current state is 'closed'"
         ));
       });
   });

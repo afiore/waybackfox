@@ -36,16 +36,18 @@
 
        fetchFromWebArchive: function (url) {
          this.showLoading();
+         this.options.webArchive.fetchSnapshots(url, _.bind(function (data, error) {
+             if (error) {
 
-         try {
-           this.options.webArchive.fetchSnapshots(url, _.bind(function (data) {
-             this.data = data;
-             this.showData();
+               this.showNoData();
 
+             } else {
+
+               this.data = data;
+               this.showData();
+
+             }
            }, this));
-         } catch (error) {
-           this.showNoData();
-         }
        },
 
        /*

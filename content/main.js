@@ -16,12 +16,15 @@ window.addEventListener("load", function (event) {
       }),
       progressListener = WaybackFox.Components.makeProgressListener(
         function onPageLoad (newUri) {
-          dump("document loaded " + newUri + "\n");
-          icon.activate();
+          if (!WaybackFox.browsingArchive()) {
+            icon.activate();
+          }
         },
         function onLocationChange (newUri) {
           dump("location changed to " + newUri + "\n");
-          icon.deactivate();
+          if (icon.currentState() !== 'idle' & !WaybackFox.browsingArchive()) {
+            icon.deactivate();
+          }
         }
       );
 

@@ -1,11 +1,13 @@
 (function (window, undefined) {
 
+
   var SliderTrait = Trait.compose(
     WaybackFox.Traits.Optionable,
     WaybackFox.Traits.EventedObject,
     WaybackFox.Traits.Toggable,
     Trait({
       data: Trait.required,
+
      /*
       * Sets the slider's value range.
       * This is generally intended to be called without parameters; in this case the maximum value
@@ -40,7 +42,37 @@
         this._setValues();
       },
 
-      onStateChange: function onStateChange (event) {
+      /*
+      *
+      * Listen to the 'change' event emitted by the slider (scale) xul element
+      * as the slider value changes
+      *
+      * event - a blur event
+      *
+      * returns nothing
+      *
+      */
+
+      _onMouseUp: function (event) {
+        var value    = parseInt(this.element.value,10),
+            snapshot = this.data[ value-1 ];
+
+        WaybackFox.tabUrl(snapshot.url);
+      },
+
+      /*
+      * Listens to the 'state-change' emitted by the icon widget.
+      * Sets the slider range and data when the state:data event is fired;
+      * otherwise hides the slider.
+      *
+      * event - a blur event
+      *
+      * returns nothing
+      *
+      */
+
+      _onIconStateChange: function _onIconStateChange (event) {
+        var data = event.message.data;
         dump("state-changed! " + event.message.currentState + "\n");
 
         if (event.message.currentState === 'data') {
@@ -70,10 +102,15 @@
   this.Slider = function Slider(element, options) {
     var instance = SliderTrait.create({
       element: element,
-      events: {},
+      events: {
+        'mouseup':'_onMouseUp'
+      },
       options: options,
       data: []
     });
+
+    //initialise EventedObject trait
+    instance.initEvents();
 
     // listen to the events emitted by the icon widget
     // so that the slider will update its value range when new
@@ -82,7 +119,7 @@
 
     if (options.icon) {
       options.icon.on('state-change', _.bind(function (event) {
-        this.onStateChange(event);
+        this._onIconStateChange(event);
       }, instance));
     }
     return instance;

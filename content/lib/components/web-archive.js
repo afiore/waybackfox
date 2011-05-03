@@ -42,9 +42,6 @@
           escapeForRegexp(sanitisedUrl),
         snapshotUrlRegexp = new RegExp(regexpString);
 
-
-    console.info("regexp string: "+regexpString);
-
     textLines.forEach( function (line, index) {
       var matches = snapshotUrlRegexp.exec(line);
       if (matches && matches.length) {
@@ -75,8 +72,10 @@
   /*
    * Issues a get request to archive.org's Way back Machine and extracts a list of available snapshots dates and urls.
    *
-   * url - The absolute url string of the page to be looked up in the web archive.
+   * url      - The absolute url string of the page to be looked up in the web archive.
    * callback - A block of code to be executed when the retrieval and the extractraction of snapshot data will be completed.
+   *            the callback receives two mutually excluding arguments: data, and error. The first being the list of extracted records, 
+  *             the second an error object suitable to be thrown.
    *
    * Returns nothing.
    */
@@ -93,7 +92,8 @@
     (function fetch () {
       var url = firstAttempt ? tabUrl : _toggleWww(tabUrl),
           request = new XMLHttpRequest(),
-          outputData;
+          outputData,
+          error;
 
       request.open('GET',[ARCHIVE_BASE_URL, '*', url].join('/'), true);
 
@@ -101,19 +101,26 @@
         if (request.readyState === 4) {
           if (request.status == '200') {
 
-            //attempt successful, pass data to callback
+            //attempt successful, append live page url to snapshot list
             outputData = extractSnapshotData(request.responseText, url);
+            outputData.push({
+              date: 'LIVE',
+              url: tabUrl
+            });
             callback(outputData);
+
           } else {
 
             if (firstAttempt) {
               firstAttempt = false;
               fetch();
+
             } else {
-              throw new Error(
+              error = new Error(
                 'Request failed for ' +  [ARCHIVE_BASE_URL, '*', url].join('/') +
                  'with status code: ' + request.status
               );
+              callback(outputData, error);
             }
           }
         }
@@ -142,7 +149,7 @@
       return true;
 
     } else {
-      fetchSnapshotData(url, callback);
+        fetchSnapshotData(url, callback);
     }
     //TODO: implement cache expiration mechanism
   }

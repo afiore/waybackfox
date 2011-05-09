@@ -46,12 +46,19 @@
       var matches = snapshotUrlRegexp.exec(line);
       if (matches && matches.length) {
          snapshots.push({
+
            'date': new Date(
               parseInt(matches[1].substr(0,4), 10),
               parseInt(matches[1].substr(4,2), 10)-1,
               parseInt(matches[1].substr(6,2), 10)
            ),
-           url: matches[0]
+
+           // replace class-web.archive.org with http://replay.web.archive.org
+           // which is the host currently in use for serving archived snapshots
+           url: matches[0].replace(
+             /^http:\/\/classic-web\.archive\.org\/web\//,
+              'http://replay.web.archive.org/'
+           )
          });
       }
     });

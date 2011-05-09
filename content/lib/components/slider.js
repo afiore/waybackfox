@@ -6,12 +6,12 @@
     WaybackFox.Traits.EventedObject,
     WaybackFox.Traits.Toggable,
     Trait({
-      data: Trait.required,
 
      /*
       * Sets the slider's value range.
-      * This is generally intended to be called without parameters; in this case the maximum value
-      * will be the length of the data array
+      *
+      * This is intended to be called without parameters; in this case
+      * the maximum value will be implicitly set to the length of the data array
       *
       * max  - the maximum value in the range (optional).
       * min  - the miniumum value in the range (optional).
@@ -21,25 +21,18 @@
       * returns nothing
       */
       _setValues: function (max, min, increment) {
-        max       = max || this.data.length;
+        var slider = this.element,
+            icon   = this.options.icon;
+
+        max       = max || icon.data.length > 0 ? icon.data.length -1 : 0;
         min       = min || 0;
         increment = increment || 1;
-        this.element.setAttribute('max',max);
-        this.element.setAttribute('min',min);
-        this.element.setAttribute('increment',increment);
-        this.element.setAttribute('value',max);
-      },
 
-      /*
-      * Public:
-      * Updates the internal data array.
-      *
-      * returns nothing
-      *
-      */
-      setData: function (data) {
-        this.data = data;
-        this._setValues();
+        _.each({
+          max:max, min:min, increment:increment, value: max
+        }, function (value, attr) {
+          slider.setAttribute(attr, value);
+        });
       },
 
       /*
@@ -54,8 +47,8 @@
       */
 
       _onMouseUp: function (event) {
-        var value    = parseInt(this.element.value,10),
-            snapshot = this.data[ value-1 ];
+        var sliderValue    = parseInt(this.element.value,10),
+            snapshot = this.options.icon.getSnapshot(sliderValue);
 
         WaybackFox.tabUrl(snapshot.url);
       },
@@ -72,12 +65,10 @@
       */
 
       _onIconStateChange: function _onIconStateChange (event) {
-        var data = event.message.data;
-        dump("state-changed! " + event.message.currentState + "\n");
 
         if (event.message.currentState === 'data') {
+          this._setValues();
           this.show();
-          this.setData(data);
         } else {
           dump("hiding slider\n");
           this.hide();
@@ -105,8 +96,7 @@
       events: {
         'mouseup':'_onMouseUp'
       },
-      options: options,
-      data: []
+      options: options
     });
 
     //initialise EventedObject trait
@@ -115,7 +105,7 @@
     // listen to the events emitted by the icon widget
     // so that the slider will update its value range when new
     // Web Archive data become available, while it will hide when
-    // Web Archive data is not available at all
+    // data is not available at all
 
     if (options.icon) {
       options.icon.on('state-change', _.bind(function (event) {

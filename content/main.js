@@ -14,6 +14,10 @@ window.addEventListener("load", function (event) {
       slider = WaybackFox.Components.Slider(document.querySelector('#wb-slider'), {
         icon: icon
       }),
+      panel = WaybackFox.Components.Panel(document.querySelector("#wb-popup"), {
+        icon: icon,
+        slider: slider
+      }),
       progressListener = WaybackFox.Components.makeProgressListener(
         function onPageLoad (newUri) {
           if (!WaybackFox.browsingArchive()) {
@@ -21,7 +25,6 @@ window.addEventListener("load", function (event) {
           }
         },
         function onLocationChange (newUri) {
-          dump("location changed to " + newUri + "\n");
           if (icon.currentState() !== 'idle' & !WaybackFox.browsingArchive()) {
             icon.deactivate();
           }

@@ -17,6 +17,24 @@
        *
        */
        data: Trait.required,
+
+       /*
+       * Gets a snapshot from the internal data array.
+       *
+       *
+       * sliderValue - the slider value (the data array index + 1).
+       *
+       * returns a snapshot object.
+       */
+
+       getSnapshot: function (index) {
+
+         if (this.data[index]) {
+             return this.data[index];
+         }
+       },
+
+
        /*
        * Shortcut for getting the current tab's url
        *

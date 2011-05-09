@@ -45,7 +45,7 @@
       *
       * returns nothing.
       */
-      _setSnapshotCount: function (count) {
+      setSnapshotCount: function (count) {
         var plural = count > 1  ? 's ' : ' ';
         this.element.querySelector("#wb-snapshot-count").
           textContent = count + " snapshot" + plural + "found";
@@ -60,7 +60,7 @@
       * returns nothing
       */
 
-      _setDate: function (date) {
+      setDate: function (date) {
         var content = date && date.getTime ?
           _.template('{{day}}/{{month}}/{{year}}', {
             day: date.getDay(),
@@ -86,8 +86,8 @@
 
         if (event.message.currentState === 'data') {
           this.show();
-          this._setSnapshotCount(icon.data.length);
-          this._setDate();
+          this.setSnapshotCount(icon.data.length);
+          this.setDate();
 
 
         } else {
@@ -109,7 +109,7 @@
         var icon     = this.options.icon,
             snapshot = icon.getSnapshot(event.target.value);
 
-        this._setDate(snapshot.date);
+        this.setDate(snapshot.date);
       }
 
 
@@ -154,6 +154,7 @@
       this._onSliderChange(event);
     }, instance));
 
+    return instance;
   }
 
   this.Panel = Panel;

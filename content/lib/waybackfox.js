@@ -40,8 +40,12 @@ this.WaybackFox = {};
   * returns true or false
   */
   this.browsingArchive = function browsingArchive () {
-     return (/^http\:\/\/classic\-web\.archive\.org\/web\//).test(this.tabUrl());
+     return (/^http\:\/\/replay\.web\.archive\.org\//).test(this.tabUrl());
   };
 
+  //set underscore.js variable interpolation syntax
+  _.templateSettings = {
+    interpolate : /\{\{(.+?)\}\}/g
+  };
 
 }).call(this.WaybackFox, this);

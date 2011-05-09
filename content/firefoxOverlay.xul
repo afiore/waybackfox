@@ -7,8 +7,7 @@
 
   <!-- third party utilities -->
   <script src="vendor/underscore.js" />
-  <script src="vendor/jquery.js" />
-  <script type="application/javascript;version=1.8" src="vendor/light-traits.js" />
+  <script src="vendor/light-traits.js" />
 
   <!-- Main application module -->
   <script src="lib/waybackfox.js"/>
@@ -23,6 +22,7 @@
   <script src="lib/components/web-archive.js" />
   <script src="lib/components/icon.js" />
   <script src="lib/components/slider.js" />
+  <script src="lib/components/panel.js" />
   <script src="lib/components/progress-listener.js" />
 
   <!-- Main script-->
@@ -44,19 +44,18 @@
     <image width="15px" height="15px" id="wb-icon" src="chrome://waybackfox/content/images/widget-idle.ico" />
     <!-- move scale into popup -->
     <scale id="wb-slider" min="1" popup="wb-popup" hidden="true"/>
-    <label id="wb-label" hidden="true"/>
     <panel id="wb-popup" position="after_start"
-                        noautohide="true"
-                        onpopupshown="waybackfox.statuspanel.update_popup();">
-       <vbox>
+                         noautohide="true"
+                         hidden="true">
+        <vbox>
           <box id="wb-close" align="right">
                        <image align="end" src="chrome://waybackfox/content/images/close-small.png"
                                                   id="wb-popup-close" height="10px" width="10px"
-                                                  onclick="waybackfox.statuspanel.popup.hidePopup();"/>
+                        />
           </box>
-          <label id="wb-available-snaps"/>
-          <label id="wb-snap-date"/>
-       </vbox>
+          <label id="wb-snapshot-count" />
+          <label id="wb-snapshot-date"  />
+        </vbox>
    </panel>
   </statusbarpanel>
  </statusbar>

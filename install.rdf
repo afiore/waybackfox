@@ -2,7 +2,7 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
  xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
-    <em:id>waybackfox@andreafiore.net</em:id>
+    <em:id>waybackfox@andreafiore.me</em:id>
     <em:name>waybackfox</em:name>
     <em:version>0.2</em:version>
     <em:creator>Andrea Fiore</em:creator>

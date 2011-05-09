@@ -25,7 +25,7 @@ Firefox extensions directory pointing at the location where the Waybackfox sourc
 has been cloned (note that the symlink has to be named exactly as the _extension id_
 defined in the `install.rdf` file).
 
-    cd $HOME/.mozilla/<development.profile>/firefox/extension
+    cd $HOME/.mozilla/firefox/<development.profile>/extensions
     ln -s waybackfox@andreafiore.me $HOME/path/to/cloned/code
 
 This method is generally preferable for local extension development, as it allows to update the add-on

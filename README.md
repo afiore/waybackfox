@@ -2,8 +2,8 @@
 
 WaybackFox is an attempt at integrating Archive.org's Wayback machine functionality directly into Firefox user interface.
 The extension adds to the browser status bar a widget allowing to look up the browser active tab's URL on the Web Archive.
-When one or several archived versions of a page are available, a slider is displayed in the browser status bar. This 
-allows accessing the different snapshots by simply dragging the slider handle backward and forward.
+When one or several archived versions of a page are available in the Web Archive, a slider is displayed in the browser status bar. This 
+This allows to rapidly browse the different archived versions by simply dragging the slider handle backward and forward.
 
 ## Notice:
 

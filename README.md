@@ -5,7 +5,7 @@ The extension adds to the browser status bar a widget allowing to look up the br
 When one or several archived versions of a page are available in the Web Archive, a slider is displayed in the browser status bar. This 
 This allows to rapidly browse the different archived versions by simply dragging the slider handle backward and forward.
 
-<img src="https://github.com/afiore/waybackfox/blob/master/screenshot.png" alt="WaybackFox screenshot" />
+<img src="https://github.com/afiore/waybackfox/raw/master/screenshot.png" alt="WaybackFox screenshot" />
 
 ## Notice:
 

@@ -2,7 +2,8 @@
 * main.js
 *
 * Bootstraps the application by instantiating components and
-* binds the main browser events to state transitions in the widget
+* binding the main browser events to the appropriate state 
+* transitions in the widget
 *
 */
 
@@ -11,13 +12,16 @@ window.addEventListener("load", function (event) {
       icon = WaybackFox.Components.Icon(document.querySelector('#wb-icon'), {
         webArchive: webArchive
       }),
+
       slider = WaybackFox.Components.Slider(document.querySelector('#wb-slider'), {
         icon: icon
       }),
+
       panel = WaybackFox.Components.Panel(document.querySelector("#wb-popup"), {
         icon: icon,
         slider: slider
       }),
+
       progressListener = WaybackFox.Components.makeProgressListener(
         function onPageLoad (newUri) {
           if (!WaybackFox.browsingArchive()) {
@@ -32,4 +36,11 @@ window.addEventListener("load", function (event) {
       );
 
    gBrowser.addTabsProgressListener(progressListener);
+   // Set the icon widget to idle when the selected tab changes
+
+   gBrowser.tabContainer.addEventListener('TabSelect', function (event) {
+       dump("Selecting tab\n");
+       icon.deactivate();
+   }, false);
+
 }, false);

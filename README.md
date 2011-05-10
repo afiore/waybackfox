@@ -51,4 +51,4 @@ The test suite can be run by simple opening test/spec/index.html in firefox.
 To the best of my knoledge Archive.org's Wayback Machine does not provide any web services or APIs for retrieving 
 archived snapshot information programmatically. Therefore Waybackfox relies on the old web UI available
 at http://classic-web.archive.org to scrape this information. This is far from being an optimal solution, 
-but seems to be the only viable way at the moment.
+but seems to be the only option available at the moment.

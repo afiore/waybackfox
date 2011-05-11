@@ -38,6 +38,6 @@ image#wb-popup-close{
   text-shadow: black 0.1em 0.1em 0.2em
 }
 #wb-snapshot-date:before{
-  content:'⇐ ';
+  content:'↩ ';
 }
 

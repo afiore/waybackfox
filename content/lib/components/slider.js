@@ -70,7 +70,6 @@
           this._setValues();
           this.show();
         } else {
-          dump("hiding slider\n");
           this.hide();
         }
       }

@@ -27,12 +27,17 @@ image#wb-popup-close{
   margin: 3px;
 }
 
-#wb-available-snaps{
+#wb-snapshot-count{
+  text-shadow: black 0.1em 0.1em 0.2em
   margin-top: 2px !important;
 }
 
-#wb-snap-date{
+#wb-snapshot-date{
   font-size: large;
   color: #BF0000;
+  text-shadow: black 0.1em 0.1em 0.2em
+}
+#wb-snapshot-date:before{
+  content:'⇐ ';
 }
 

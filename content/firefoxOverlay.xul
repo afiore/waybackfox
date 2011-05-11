@@ -54,7 +54,7 @@
                         />
           </box>
           <label id="wb-snapshot-count" />
-          <label id="wb-snapshot-date"  />
+          <label id="wb-snapshot-date" />
         </vbox>
    </panel>
   </statusbarpanel>

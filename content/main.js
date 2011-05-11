@@ -39,7 +39,6 @@ window.addEventListener("load", function (event) {
    // Set the icon widget to idle when the selected tab changes
 
    gBrowser.tabContainer.addEventListener('TabSelect', function (event) {
-       dump("Selecting tab\n");
        icon.deactivate();
    }, false);
 

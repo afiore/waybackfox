@@ -33,7 +33,7 @@ code without having to rebuild and reinstall the bundle.
 
 ## Third party libraries
 
-WaybackFox itself is build on top of two lovely mini libraries:
+WaybackFox itself is built on top of two lovely mini libraries:
 
 * [Underscore.js](https://github.com/documentcloud/underscore/) by DocumentCloud.
 * [Light-traits](https://github.com/Gozala/light-traits) by Irakli Gozalishvili.

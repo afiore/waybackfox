@@ -15,11 +15,11 @@ This project is in pre-alpha state and I am not affiliated to Archive.org.
 ## Building and installing
 
 An  .xpi bundle can be build by running the build.sh shell script
-(this assumes you are on a Unix shell). Once build this can be installed by simply
-opening the generated waybackfox.xpi in Firefox.
+(this assumes you are on a Unix shell).
 
     sh build.sh
 
+Once built, this can be installed by simply opening the generated waybackfox.xpi in Firefox. 
 In alternative, the add-on can be also run by creating a symbolic link in the 
 Firefox extensions directory pointing at the location where the Waybackfox source code 
 has been cloned (note that the symlink has to be named exactly as the _extension id_

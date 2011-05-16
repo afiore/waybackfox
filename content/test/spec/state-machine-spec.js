@@ -22,7 +22,7 @@
         Door.prototype.id = _.uniqueId(name);
         var instance = DoorTrait.create(Door.prototype);
         instance.stateMachine(getSpec());
-        return instanc;
+        return instance;
       },
       door;
 

@@ -76,16 +76,36 @@
       "$1$3" : "$1www.$3";
     return url.replace(/^(https?:\/\/)(www\.)?(.*)/, replacement);
   }
+
+
+   /*
+   * Given a look up url, prepend the Wayback Machine base URL and strip the trailing slash.
+   *
+   * url - the URL of the resource to be looked up in the archive
+   * examples:
+   *
+   *   var lookUpUrl = makeUrl('http://www.bbc.co.uk/');
+   *
+   *
+   * returns the URL to the list of archived snapshots in the Wayback Machine
+   */
+  function makeUrl (url) {
+    url = url.replace(/\/$/,'');
+    return [ARCHIVE_BASE_URL, '*', url].join('/');
+  }
+
+
   /*
    * Issues a get request to archive.org's Way back Machine and extracts a list of available snapshots dates and urls.
    *
    * url      - The absolute url string of the page to be looked up in the web archive.
    * callback - A block of code to be executed when the retrieval and the extractraction of snapshot data will be completed.
    *            the callback receives two mutually excluding arguments: data, and error. The first being the list of extracted records, 
-  *             the second an error object suitable to be thrown.
+   *             the second an error object suitable to be thrown.
    *
    * Returns nothing.
    */
+
 
   function fetchSnapshotData (tabUrl, callback) {
     var firstAttempt = true;
@@ -102,10 +122,12 @@
           outputData,
           error;
 
-      request.open('GET',[ARCHIVE_BASE_URL, '*', url].join('/'), true);
+
+      request.open('GET', makeUrl(url), true);
 
       request.onreadystatechange = function (event) {
-        if (request.readyState === 4) {
+        if (request.readyState == 4 ) {
+
           if (request.status == '200') {
 
             //attempt successful, append live page url to snapshot list
@@ -124,7 +146,7 @@
 
             } else {
               error = new Error(
-                'Request failed for ' +  [ARCHIVE_BASE_URL, '*', url].join('/') +
+                'Request failed for ' +  makeUrl(url) +
                  'with status code: ' + request.status
               );
               callback(outputData, error);

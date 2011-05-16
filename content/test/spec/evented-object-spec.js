@@ -39,19 +39,20 @@ var methodCalls = {
     // they do not provide any initialisation mechianism)
 
     EventedObject = function (element) {
-      EventedObject.prototype.element = element;
-      var instance = cortex(EventedTrait.create(EventedObject.prototype));
+      var instance = EventedTrait.create({
+        element: element,
+        events: {
+          'click a': 'handleClick',
+          'click': 'handleOtherClick',
+          'data-available': 'handleCustomEvent'
+        }
+      });
       //initialisation method
       instance.initEvents();
       return instance;
     },
     instance;
 
-    EventedObject.prototype.events = {
-      'click a': 'handleClick',
-      'click': 'handleOtherClick',
-      'data-available': 'handleCustomEvent'
-    };
 
 
 

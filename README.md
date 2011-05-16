@@ -10,9 +10,15 @@ handle backward and forward.
 
 ## Notice:
 
-This project is in pre-alpha state and I am not affiliated to Archive.org.
+This project is still in a pre-alpha, working prototype state. I am not affiliated to Internet Archive and this is 
+an independent and self-initiated effort.
 
-## Building and installing
+## Installing
+
+A recent build of WaybackFox can be installed [here](https://github.com/downloads/afiore/waybackfox/waybackfox.xpi).
+
+
+## Developing and building
 
 An  .xpi bundle can be build by running the build.sh shell script
 (this assumes you are on a Unix shell).

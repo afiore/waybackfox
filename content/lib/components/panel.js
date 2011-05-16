@@ -64,7 +64,8 @@
         var content = date && date.getTime ?
           _.template('{{day}}/{{month}}/{{year}}', {
             day: date.getDay(),
-            month: date.getMonth(),
+            // January is 0
+            month: date.getMonth() + 1,
             year: date.getFullYear()
           }) :
 

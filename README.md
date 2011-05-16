@@ -15,7 +15,7 @@ an independent and self-initiated effort.
 
 ## Installing
 
-A recent build of WaybackFox can be installed [here](https://github.com/downloads/afiore/waybackfox/waybackfox.xpi).
+[Latest build](https://github.com/downloads/afiore/waybackfox/waybackfox-16-05-2011-13.00.xpi) (16 May 2011, commit aa3ae8a629cc61d37be9)
 
 
 ## Developing and building

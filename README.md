@@ -15,7 +15,7 @@ an independent and self-initiated effort.
 
 ## Installing
 
-[Latest build](https://github.com/downloads/afiore/waybackfox/waybackfox-16-05-2011-13.00.xpi) (16 May 2011, commit aa3ae8a629cc61d37be9)
+[Latest build](https://github.com/downloads/afiore/waybackfox/waybackfox-22-05-2011-13.00.xpi) (22 May 2011, f631098)
 
 
 ## Developing and building
